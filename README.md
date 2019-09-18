@@ -1,7 +1,5 @@
 # Disaster Response Pipeline Project
 
-![Intro Pic](screenshots/intro.png)
-
 ## Table of Contents
 1. [Description](#description)
 2. [Getting Started](#getting_started)
