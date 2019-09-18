@@ -20,9 +20,9 @@ The aim of the project is to build a Natural Language Processing tool that categ
 
 The Project is divided in the following Sections:
 
-1. Data Processing, ETL Pipeline to extract data from source, clean data and save them in a proper databse structure
-2. Machine Learning Pipeline to train a model able to classify text message in categories
-3. Web App to show model results in real time. 
+- Data Processing, ETL Pipeline to extract data from source, clean data and save them in a proper databse structure
+- Machine Learning Pipeline to train a model able to classify text message in categories
+- Web App to show model results in real time. 
 
 <a name="getting_started"></a>
 ## Getting Started
