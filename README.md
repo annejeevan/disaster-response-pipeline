@@ -81,4 +81,4 @@ Using a standard desktop/laptop (4 CPUs, RAM 8Gb or above) it may take several h
 
 1. This is an example of a message you can type to test Machine Learning model performance
 
-![Sample Input](screenshots/output_1.png)
+![Screenshot](screenshots/output_1.png)
