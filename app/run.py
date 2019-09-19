@@ -2,8 +2,18 @@ import json
 import plotly
 import pandas as pd
 
+import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
+from collections import defaultdict, Counter
+from nltk.corpus import brown
+from nltk.util import ngrams
+import matplotlib.pyplot as plt
+import math
+from nltk.corpus import stopwords
+stop_words = set(stopwords.words('english'))
+import seaborn as sns
+import warnings
 
 from flask import Flask
 from flask import render_template, request, jsonify
@@ -43,6 +53,25 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
 
+    y = df.iloc[:,4:]
+    cat_dist = y.sum()
+    cat_names = y.columns.tolist()
+
+
+    #creating a dictionary with words and their counts
+    dist = defaultdict(int)
+    for msg in df["message"]:
+        #creating an object for further generating unigrams, bigrams etc.
+        msg = msg.lower()
+        tokens = nltk.word_tokenize(msg)
+        tokens = [token for token in tokens if token.isalpha() if token not in stop_words]
+        for word in tokens:
+            dist[word] += 1
+    #calculates the top words in the messages
+    dist_count_words = [list(a) for a in zip(*nltk.FreqDist(dist).most_common(25))]
+    dist_count = dist_count_words[1]
+    words = dist_count_words[0]
+
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -61,6 +90,42 @@ def index():
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=cat_names,
+                    y=cat_dist
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=words,
+                    y=dist_count
+                )
+            ],
+
+            'layout': {
+                'title': 'Top 25 words in messages',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Words"
                 }
             }
         }
